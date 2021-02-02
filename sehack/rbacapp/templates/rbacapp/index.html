@@ -1,1 +1,107 @@
-<h1>Hello {{name}} this is a template</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!-- Introduction content on the page -->  
+<section id="header">
+    <div class="container">
+        <h1 class="display-1 text-center text-white mt-5"><span class='bg-dark word'>RBAC Hack</span></h1>
+        <h2 class="display-6 text-center">Observe. Verify. Protect.</h2>
+    </div>  
+</section>
+
+<script>
+    function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function getRandomLetter() {
+ var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+ return alphabet[rand(0,alphabet.length - 1)]
+}
+function getRandomWord(word) {
+  var text = word.innerHTML
+  
+  var finalWord = ''
+  for(var i=0;i<text.length;i++) {
+    finalWord += text[i] == ' ' ? ' ' : getRandomLetter()
+  }
+ 
+  return finalWord
+}
+
+var word = document.querySelector('.word')
+var interv = 'undefined'
+var canChange = false
+var globalCount = 0
+var count = 0
+var INITIAL_WORD = word.innerHTML;
+var isGoing = false
+
+function init() {
+ if(isGoing) return;
+ 
+ isGoing = true
+ var randomWord = getRandomWord(word)
+ word.innerHTML = randomWord
+
+ interv = setInterval(function() {
+  var finalWord = ''
+  for(var x=0;x<INITIAL_WORD.length;x++) {
+   if(x <= count && canChange) {
+    finalWord += INITIAL_WORD[x]
+   } else {
+    finalWord += getRandomLetter()
+   }
+  }
+  word.innerHTML = finalWord
+  if(canChange) {
+    count++
+  }
+  if(globalCount >= 20) {
+   canChange = true
+  }
+  if(count>=INITIAL_WORD.length) {
+   clearInterval(interv)
+   count = 0
+   canChange = false
+   globalCount = 0
+   isGoing = false
+  }
+  globalCount++
+ },50)
+ 
+}
+
+
+
+window.addEventListener('load', init)
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
