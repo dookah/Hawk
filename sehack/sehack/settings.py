@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'rbacapp'
 ]
 
@@ -105,6 +106,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Auth0 config
+
+SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
+SOCIAL_AUTH_AUTH0_DOMAIN = 'rbachack.eu.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = os.getenv("auth0_key")
+SOCIAL_AUTH_AUTH0_SECRET = os.getenv("auth0_secret")
+
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'profile',
+    'email'
+]
+
+AUTHENTICATION_BACKENDS = {
+    'rbacapp.auth0backend.Auth0',
+    'django.contrib.auth.backends.ModelBackend'
+}
+
+LOGIN_URL = '/login/auth0'
+LOGIN_REDIRECT_URL = '/rbacapp/dashboard'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
