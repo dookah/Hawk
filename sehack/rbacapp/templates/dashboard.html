@@ -1,0 +1,110 @@
+<head>
+    <title>Hawk - SE Hack</title>
+    <!-- Bulma Import -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Image Import-->
+    {% load static %}
+    
+    <link rel="shortcut icon" href="{% static 'favicon.png' %}"/>
+
+    <style>
+      .has-image-centered {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    </style>
+</head>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+      </a>
+  
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item">
+          Home
+        </a>
+  
+        <a class="navbar-item">
+          Documentation
+        </a>
+  
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More
+          </a>
+  
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              About
+            </a>
+            <a class="navbar-item">
+              Jobs
+            </a>
+            <a class="navbar-item">
+              Contact
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Report an issue
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-light" href="profile">
+                <strong>Account</strong>
+              </a>
+            <a class="button is-danger" href="logout">
+              Log out
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+<div class="container">
+
+    <div class="section">
+        <h1 class="title is-1 has-text-centered">Welcome <span class="has-text-white has-background-dark p-1">{{ user.username }}</span></h1>
+    </div>
+
+    <div class="notification is-info is-light">
+      <button class="delete"></button>
+      Hello there! We can see it's your first time visiting <strong>Hawk</strong>. You can monitor your role-based access control user of your Cisco products in the cards below. You can configure new integrations <strong><a>here</a></strong>, don't worry you can change these later by clicking <strong>configure</strong> below the cards. Developed by Joshua Dean and Peter Morris for the Cisco Q3 SE hack.
+    </div>
+
+    <section class="section">
+        <div class="logged-in-box auth0-box logged-in">
+            <h1 id="logo"><img src="//cdn.auth0.com/samples/auth0_logo_final_blue_RGB.png" /></h1>
+            <img class="avatar" src="{{ auth0User.extra_data.picture }}"/>
+            <h2>Welcome {{ user.username }}</h2>
+            <pre>{{ userdata }}</pre>
+        </div>
+    </section>
+</div>
+
+<!-- auth0login/templates/dashboard.html -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+    const $notification = $delete.parentNode;
+
+    $delete.addEventListener('click', () => {
+      $notification.parentNode.removeChild($notification);
+    });
+  });
+});
+</script>

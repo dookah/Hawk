@@ -4,6 +4,13 @@
 {% load static %}
 
 <link rel="shortcut icon" href="{% static 'favicon.png' %}"/>
+<style>
+  .has-image-centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
 <title>Hawk - SE Hack</title>
 </head>
 
@@ -56,7 +63,7 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary" href="login/auth0">
+          <a class="button is-black" href="login/auth0">
             <strong>Sign up</strong>
           </a>
           <a class="button is-light" href="login/auth0">
@@ -77,23 +84,34 @@
 </section>
 
 <section id="observe" class="section">
-    <div class="container">
-        <img src="{% static 'hawk.png' %}" alt="hawk observing">
-        <h2 class="has-text-white"><span class='is-size-4  has-background-black p-1 is-family-monospace'>Observe.</span></h2>
-        <p>Hello</p>
+  <div class="columns ">
+    <div class="column">
+    <div class="container box">
+      <figure class="image is-64x64 has-image-centered">
+        <img class="has-text-centered " src="{% static 'hawk.png' %}" alt="hawk observing">
+      </figure>
+        <h2 class="has-text-white has-text-centered "><span class='is-size-4  has-background-black p-1 is-family-monospace'>Observe</span></h2>
+        <p class="has-text-centered is-family-monospace mt-3">Observe who has access to your buisness critical applications.</p>
     </div>  
-</section>
-
-<section id="verify" style="margin-top: 100px;">
-    <div class="container">
-        <h2 class="text-white"><span class='bg-dark p-1'>Verify.</span></h2>
+  </div>
+  <div class="column">
+  <div class="container box">
+    <figure class="image is-64x64 has-image-centered">
+      <img class="has-text-centered " src="{% static 'tick.png' %}" alt="hawk observing">
+    </figure>
+    <h2 class="has-text-white has-text-centered "><span class='is-size-4  has-background-black p-1 is-family-monospace'>Verify</span></h2>
+      <p class="has-text-centered is-family-monospace mt-3">Verify the users of your applications, ensuring compliance.</p>
+  </div>   
+</div>
+<div class="column">
+    <div class="container box">
+      <figure class="image is-64x64 has-image-centered">
+        <img class="has-text-centered " src="{% static 'lock.png' %}" alt="hawk observing">
+      </figure>
+        <h2 class="has-text-white has-text-centered "><span class='is-size-4  has-background-black p-1 is-family-monospace'>Protect</span></h2>
+        <p class="has-text-centered is-family-monospace mt-3">Protect your applications by removing threat-actors from your access control.</p>
     </div>  
-</section>
-
-<section id="protect" style="margin-top: 100px;">
-    <div class="container">
-        <h2 class="text-white"><span class='bg-dark p-1'>Protect.</span></h2>
-    </div>  
+  </div></div>
 </section>
 
 <script>
