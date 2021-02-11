@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from urllib.parse import urlencode
+from .models import Integration
 import json
 
 def index(request):
@@ -56,3 +57,32 @@ def logout(request):
     logout_url = 'https://%s/v2/logout?client_id=%s&%s' % \
                  (settings.SOCIAL_AUTH_AUTH0_DOMAIN, settings.SOCIAL_AUTH_AUTH0_KEY, return_to)
     return HttpResponseRedirect(logout_url)
+
+def settings(request):
+    user = request.user
+    auth0user = user.social_auth.get(provider='auth0')#
+    userdata = {
+        'user_id': auth0user.uid,
+        'name': user.first_name,
+        'picture': auth0user.extra_data['picture'],
+        'email': auth0user.extra_data['email'],
+    }
+
+    query_set = Integration.objects.filter(user=user.first_name)
+    integrations = [None] * len(query_set)
+    for i in range(len(query_set)):
+        integrations[i] = {
+            'user': query_set[i].user,
+            'product': query_set[i].product,
+            'host': query_set[i].host,
+            'ikey': query_set[i].ikey,
+            'skey': query_set[i].skey,
+            'username': query_set[i].username,
+            'password': query_set[i].password,
+        }
+
+    return render(request, 'settings.html', {
+        'auth0User': auth0user,
+        'userdata': json.dumps(userdata, indent=4),
+        'integrations': json.dumps(integrations, indent=4),
+    })
