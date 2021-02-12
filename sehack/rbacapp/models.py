@@ -10,3 +10,4 @@ class Integration(models.Model):
     skey = models.CharField(max_length=200)
     username = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
+    enabled = models.BooleanField(default=False)

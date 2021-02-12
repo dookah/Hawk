@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as log_out
 from django.contrib.auth.decorators import login_required
@@ -6,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from urllib.parse import urlencode
 from .models import Integration
+from django.core import serializers
 import json
 
 def index(request):
@@ -68,21 +70,22 @@ def settings(request):
         'email': auth0user.extra_data['email'],
     }
 
-    query_set = Integration.objects.filter(user=user.first_name)
-    integrations = [None] * len(query_set)
-    for i in range(len(query_set)):
-        integrations[i] = {
-            'user': query_set[i].user,
-            'product': query_set[i].product,
-            'host': query_set[i].host,
-            'ikey': query_set[i].ikey,
-            'skey': query_set[i].skey,
-            'username': query_set[i].username,
-            'password': query_set[i].password,
-        }
+    query_set = Integration.objects.all()
+    meraki_set = query_set.filter(product='meraki').all()
+    ise_set = query_set.filter(product='ise').all()
+    duo_set = query_set.filter(product='duo').all()
+    viptela_set = query_set.filter(product='viptela').all()
+    umbrella_set = query_set.filter(product='umbrella').all()
+    webex_set = query_set.filter(product='webex').all()
 
     return render(request, 'settings.html', {
         'auth0User': auth0user,
         'userdata': json.dumps(userdata, indent=4),
-        'integrations': json.dumps(integrations, indent=4),
+        'integrations': list(query_set.values()),
+        'meraki': list(meraki_set.values()),
+        'ise': list(ise_set.values()),
+        'duo': list(duo_set.values()),
+        'viptela': list(viptela_set.values()),
+        'umbrella': list(umbrella_set.values()),
+        'webex': list(webex_set.values()),
     })
