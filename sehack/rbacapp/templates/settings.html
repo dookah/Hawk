@@ -119,7 +119,7 @@
                 <br>
                 <div class="field">
                   <label class="label">API key</label>
-                  <input class="input" type="text" placeholder="Enter API key here..." id="meraki_api_key" value="{{ meraki.0.ikey }}">
+                  <input class="input" type="text" placeholder="Enter API key here..." id="meraki_ikey" value="{{ meraki.0.ikey }}">
                 </div>
               </div>
             </div>
@@ -162,11 +162,11 @@
                 <br>
                 <div class="field">
                   <label class="label">Username</label>
-                  <input class="input" type="text" placeholder="Username" value="{{ ise.0.username }}">
+                  <input class="input" type="text" placeholder="Username" id="ise_username" value="{{ ise.0.username }}">
                 </div>
                 <div class="field">
                   <label class="label">Password</label>
-                  <input class="input" type="text" placeholder="Password" value="{{ ise.0.password }}">
+                  <input class="input" type="text" placeholder="Password" id="ise_password" value="{{ ise.0.password }}">
                 </div>
               </div>
             </div>
@@ -209,15 +209,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname" value="{{ duo.0.host }}">
+                  <input class="input" type="text" placeholder="Hostname" id="duo_host" value="{{ duo.0.host }}">
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey" value="{{ duo.0.ikey }}">
+                  <input class="input" type="text" placeholder="ikey" id="duo_ikey" value="{{ duo.0.ikey }}">
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" value="{{ duo.0.skey }}">
+                  <input class="input" type="text" placeholder="skey" id="duo_skey" value="{{ duo.0.skey }}">
                 </div>
               </div>
             </div>
@@ -262,15 +262,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname">
+                  <input class="input" type="text" placeholder="Hostname" id="viptela_host">
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey">
+                  <input class="input" type="text" placeholder="ikey" id="viptela_ikey">
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey">
+                  <input class="input" type="text" placeholder="skey" id="viptela_skey">
                 </div>
               </div>
             </div>
@@ -313,15 +313,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname">
+                  <input class="input" type="text" placeholder="Hostname" id="umbrella_host">
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey">
+                  <input class="input" type="text" placeholder="ikey" id="umbrella_ikey">
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey">
+                  <input class="input" type="text" placeholder="skey" id="umbrella_skey">
                 </div>
               </div>
             </div>
@@ -364,15 +364,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname">
+                  <input class="input" type="text" placeholder="Hostname" id="webex_host">
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey">
+                  <input class="input" type="text" placeholder="ikey" id="webex_ikey">
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey">
+                  <input class="input" type="text" placeholder="skey" id="webex_skey">
                 </div>
               </div>
             </div>
@@ -412,6 +412,7 @@
 </script>
 <script>
   $(document).ready(function() {
+
     $("input[name='meraki']").click(function() {
       var radio = $("input[name='meraki']:checked").val();
       if(radio=="enabled") {
@@ -420,24 +421,61 @@
         $('#meraki_api_key').prop('disabled', true);
       }
     });
-  });
-</script>
-<script>
-  $(document).ready(function() {
-    $('#save').click(function() {
-      alert("saved");
-    });
+
+
+
+
     $('#cancel').click(function() {
       location.href = 'dashboard';
     });
-  })
-</script>
-<script>
-  $(document).ready(function() {
-    var integrations = ["meraki", "duo", "ise", "umbrella", "webex", "viptela"];
-    for(i=0; i<integrations.length; i++) {
-      var checkbox = "input[name='".concat(integrations[i]).concat("']");
-      alert(enabled);
-    }
+
+
+
+
+
+    $('#save').click(function() {
+      var integrations = ["meraki", "duo", "ise", "umbrella", "webex", "viptela"];
+      var parameters = {
+        'user': "",
+        'product': "",
+        'host': "",
+        'ikey': "",
+        'skey': "",
+        'username': "",
+        'password': "",
+        'enabled': ""
+      };
+      for(i=0; i<integrations.length; i++) {
+        var checkbox = String($("input[name=\"".concat(integrations[i]).concat("\"]")).prop('checked'));
+        parameters['enabled'] = checkbox.charAt(0).toUpperCase() + checkbox.slice(1);
+        parameters['host'] = $(String("#" + integrations[i] + "_" + "host")).val();
+        parameters['ikey'] = $(String("#" + integrations[i] + "_" + "ikey")).val();
+        parameters['skey'] = $(String("#" + integrations[i] + "_" + "skey")).val();
+        parameters['username'] = $(String("#" + integrations[i] + "_" + "username")).val();
+        parameters['password'] = $(String("#" + integrations[i] + "_" + "password")).val();
+        
+        for(var key in parameters) {
+          if(parameters[key] === undefined) {
+            parameters[key] = "";
+          }
+        }
+
+        var to_store = {
+          'user': "{{ auth0User.uid }}",
+          'product': integrations[i],
+          'host': parameters['host'],
+          'ikey': parameters['ikey'],
+          'skey': parameters['skey'],
+          'username': parameters['username'],
+          'password': parameters['password'],
+          'enabled': parameters['enabled']
+        }
+      }
+    });
+    
+
+
+
+
   });
 </script>
