@@ -31,7 +31,7 @@ def meraki(request):
     host = 'https://api.meraki.com/api/v0/organizations'
 
     headers = {
-        'X-Cisco-Meraki-API-Key' : 'cf1b763bbed2799ba2deba56fc57c574347494e7'
+        'X-Cisco-Meraki-API-Key' : ''
     }
     
     request = requests.get(host, headers=headers)
