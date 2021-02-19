@@ -70,7 +70,7 @@ def settings(request):
         'email': auth0user.extra_data['email'],
     }
 
-    query_set = Integration.objects.all()
+    query_set = Integration.objects.filter(user='user_id').all()
     meraki_set = query_set.filter(product='meraki').all()
     ise_set = query_set.filter(product='ise').all()
     duo_set = query_set.filter(product='duo').all()
