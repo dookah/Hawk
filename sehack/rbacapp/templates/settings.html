@@ -15,11 +15,13 @@
     }
     </style>
     <script type="text/javascript" src="{% static 'jquery-3.5.1.min.js' %}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script> -->
 </head>
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <img src="static/hawk-forward.png" >
       </a>
   
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -119,7 +121,7 @@
                 <br>
                 <div class="field">
                   <label class="label">API key</label>
-                  <input class="input" type="text" placeholder="Enter API key here..." id="meraki_ikey" value="{{ meraki.0.ikey }}">
+                  <input class="input" type="text" placeholder="Enter API key here..." id="meraki_ikey" value="{{ meraki.0.ikey }}" disabled>
                 </div>
               </div>
             </div>
@@ -162,11 +164,11 @@
                 <br>
                 <div class="field">
                   <label class="label">Username</label>
-                  <input class="input" type="text" placeholder="Username" id="ise_username" value="{{ ise.0.username }}">
+                  <input class="input" type="text" placeholder="Username" id="ise_username" value="{{ ise.0.username }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">Password</label>
-                  <input class="input" type="text" placeholder="Password" id="ise_password" value="{{ ise.0.password }}">
+                  <input class="input" type="text" placeholder="Password" id="ise_password" value="{{ ise.0.password }}" disabled>
                 </div>
               </div>
             </div>
@@ -209,15 +211,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname" id="duo_host" value="{{ duo.0.host }}">
+                  <input class="input" type="text" placeholder="Hostname" id="duo_host" value="{{ duo.0.host }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey" id="duo_ikey" value="{{ duo.0.ikey }}">
+                  <input class="input" type="text" placeholder="ikey" id="duo_ikey" value="{{ duo.0.ikey }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="duo_skey" value="{{ duo.0.skey }}">
+                  <input class="input" type="text" placeholder="skey" id="duo_skey" value="{{ duo.0.skey }}" disabled>
                 </div>
               </div>
             </div>
@@ -262,15 +264,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname" id="viptela_host">
+                  <input class="input" type="text" placeholder="Hostname" id="viptela_host" value="{{ viptela.0.host }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey" id="viptela_ikey">
+                  <input class="input" type="text" placeholder="ikey" id="viptela_ikey" value="{{ viptela.0.ikey }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="viptela_skey">
+                  <input class="input" type="text" placeholder="skey" id="viptela_skey" value="{{ viptela.0.skey }}" disabled>
                 </div>
               </div>
             </div>
@@ -313,15 +315,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname" id="umbrella_host">
+                  <input class="input" type="text" placeholder="Hostname" id="umbrella_host" value="{{ umbrella.0.host }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey" id="umbrella_ikey">
+                  <input class="input" type="text" placeholder="ikey" id="umbrella_ikey" value="{{ umbrella.0.ikey }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="umbrella_skey">
+                  <input class="input" type="text" placeholder="skey" id="umbrella_skey" value="{{ umbrella.0.skey }}" disabled>
                 </div>
               </div>
             </div>
@@ -364,15 +366,15 @@
                 <br>
                 <div class="field">
                   <label class="label">Host</label>
-                  <input class="input" type="text" placeholder="Hostname" id="webex_host">
+                  <input class="input" type="text" placeholder="Hostname" id="webex_host" value="{{ webex.0.host }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey" id="webex_ikey">
+                  <input class="input" type="text" placeholder="ikey" id="webex_ikey" value="{{ webex.0.ikey }}" disabled>
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="webex_skey">
+                  <input class="input" type="text" placeholder="skey" id="webex_skey" value="{{ webex.0.skey }}" disabled>
                 </div>
               </div>
             </div>
@@ -397,44 +399,135 @@
 
 </div>
 
-<!-- auth0login/templates/dashboard.html -->
-
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-    const $notification = $delete.parentNode;
 
-    $delete.addEventListener('click', () => {
-      $notification.parentNode.removeChild($notification);
-    });
-  });
-});
-</script>
-<script>
+  // Utility function for obtaining CSRF token
+  function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
   $(document).ready(function() {
 
+    const csrftoken = getCookie('csrftoken');
+
+    // Change radio button selection and enable inputs based on enabled integrations
+    if("{{ meraki.0.enabled }}" == "True") {
+      $("input[name='meraki'][value='enabled']").prop('checked', true);
+      $('#meraki_ikey').prop('disabled', false);
+    }
+    if("{{ ise.0.enabled }}" == "True") {
+      $("input[name='ise'][value='enabled']").prop('checked', true);
+      $('#ise_username').prop('disabled', false);
+      $('#ise_password').prop('disabled', false);
+    }
+    if("{{ duo.0.enabled }}" == "True") {
+      $("input[name='duo'][value='enabled']").prop('checked', true);
+      $('#duo_host').prop('disabled', false);
+      $('#duo_ikey').prop('disabled', false);
+      $('#duo_skey').prop('disabled', false);
+    }
+    if("{{ viptela.0.enabled }}" == "True") {
+      $("input[name='viptela'][value='enabled']").prop('checked', true);
+      $('#viptela_host').prop('disabled', false);
+      $('#viptela_ikey').prop('disabled', false);
+      $('#viptela_skey').prop('disabled', false);
+    }
+    if("{{ umbrella.0.enabled }}" == "True") {
+      $("input[name='umbrella'][value='enabled']").prop('checked', true);
+      $('#umbrella_host').prop('disabled', false);
+      $('#umbrella_ikey').prop('disabled', false);
+      $('#umbrella_skey').prop('disabled', false);
+    }
+    if("{{ webex.0.enabled }}" == "True") {
+      $("input[name='webex'][value='enabled']").prop('checked', true);
+      $('#webex_host').prop('disabled', false);
+      $('#webex_ikey').prop('disabled', false);
+      $('#webex_skey').prop('disabled', false);
+    }
+
+    // Disable/enable inputs when "enabled" radio is toggled
     $("input[name='meraki']").click(function() {
       var radio = $("input[name='meraki']:checked").val();
       if(radio=="enabled") {
-        $('#meraki_api_key').prop('disabled', false);
+        $('#meraki_ikey').prop('disabled', false);
       } else if(radio=="disabled") {
-        $('#meraki_api_key').prop('disabled', true);
+        $('#meraki_ikey').prop('disabled', true);
+      }
+    });
+    $("input[name='ise']").click(function() {
+      var radio = $("input[name='ise']:checked").val();
+      if(radio=="enabled") {
+        $('#ise_username').prop('disabled', false);
+        $('#ise_password').prop('disabled', false);
+      } else if(radio=="disabled") {
+        $('#ise_username').prop('disabled', true);
+        $('#ise_password').prop('disabled', true);
+      }
+    });
+    $("input[name='duo']").click(function() {
+      var radio = $("input[name='duo']:checked").val();
+      if(radio=="enabled") {
+        $('#duo_host').prop('disabled', false);
+        $('#duo_ikey').prop('disabled', false);
+        $('#duo_skey').prop('disabled', false);
+      } else if(radio=="disabled") {
+        $('#duo_host').prop('disabled', true);
+        $('#duo_ikey').prop('disabled', true);
+        $('#duo_skey').prop('disabled', true);
+      }
+    });
+    $("input[name='viptela']").click(function() {
+      var radio = $("input[name='viptela']:checked").val();
+      if(radio=="enabled") {
+        $('#viptela_host').prop('disabled', false);
+        $('#viptela_ikey').prop('disabled', false);
+        $('#viptela_skey').prop('disabled', false);
+      } else if(radio=="disabled") {
+        $('#viptela_host').prop('disabled', true);
+        $('#viptela_ikey').prop('disabled', true);
+        $('#viptela_skey').prop('disabled', true);
+      }
+    });
+    $("input[name='umbrella']").click(function() {
+      var radio = $("input[name='umbrella']:checked").val();
+      if(radio=="enabled") {
+        $('#umbrella_host').prop('disabled', false);
+        $('#umbrella_ikey').prop('disabled', false);
+        $('#umbrella_skey').prop('disabled', false);
+      } else if(radio=="disabled") {
+        $('#umbrella_host').prop('disabled', true);
+        $('#umbrella_ikey').prop('disabled', true);
+        $('#umbrella_skey').prop('disabled', true);
+      }
+    });
+    $("input[name='webex']").click(function() {
+      var radio = $("input[name='webex']:checked").val();
+      if(radio=="enabled") {
+        $('#webex_host').prop('disabled', false);
+        $('#webex_ikey').prop('disabled', false);
+        $('#webex_skey').prop('disabled', false);
+      } else if(radio=="disabled") {
+        $('#webex_host').prop('disabled', true);
+        $('#webex_ikey').prop('disabled', true);
+        $('#webex_skey').prop('disabled', true);
       }
     });
 
-
-
-
-    $('#cancel').click(function() {
-      location.href = 'dashboard';
-    });
-
-
-
-
-
+    // Update database when "Save" button is pressed
     $('#save').click(function() {
-      var integrations = ["meraki", "duo", "ise", "umbrella", "webex", "viptela"];
+      var products = ["meraki", "duo", "ise", "umbrella", "webex", "viptela"];
       var parameters = {
         'user': "",
         'product': "",
@@ -445,14 +538,16 @@
         'password': "",
         'enabled': ""
       };
-      for(i=0; i<integrations.length; i++) {
-        var checkbox = String($("input[name=\"".concat(integrations[i]).concat("\"]")).prop('checked'));
+      var integrations = [];
+
+      for(i=0; i<products.length; i++) {
+        var checkbox = String($("input[name=\"".concat(products[i]).concat("\"]")).prop('checked'));
         parameters['enabled'] = checkbox.charAt(0).toUpperCase() + checkbox.slice(1);
-        parameters['host'] = $(String("#" + integrations[i] + "_" + "host")).val();
-        parameters['ikey'] = $(String("#" + integrations[i] + "_" + "ikey")).val();
-        parameters['skey'] = $(String("#" + integrations[i] + "_" + "skey")).val();
-        parameters['username'] = $(String("#" + integrations[i] + "_" + "username")).val();
-        parameters['password'] = $(String("#" + integrations[i] + "_" + "password")).val();
+        parameters['host'] = $(String("#" + products[i] + "_" + "host")).val();
+        parameters['ikey'] = $(String("#" + products[i] + "_" + "ikey")).val();
+        parameters['skey'] = $(String("#" + products[i] + "_" + "skey")).val();
+        parameters['username'] = $(String("#" + products[i] + "_" + "username")).val();
+        parameters['password'] = $(String("#" + products[i] + "_" + "password")).val();
         
         for(var key in parameters) {
           if(parameters[key] === undefined) {
@@ -462,7 +557,7 @@
 
         var to_store = {
           'user': "{{ auth0User.uid }}",
-          'product': integrations[i],
+          'product': products[i],
           'host': parameters['host'],
           'ikey': parameters['ikey'],
           'skey': parameters['skey'],
@@ -470,12 +565,41 @@
           'password': parameters['password'],
           'enabled': parameters['enabled']
         }
+        integrations.push((products[i], to_store));
       }
+
+      fetch("/api/insert_integrations", {
+          method: 'POST',
+          mode: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify(integrations)
+        })
+        .then(response => {
+          if(response.ok) {
+            response.text()
+          } else {
+            Swal.fire(
+              'Oops...',
+              'Something went wrong – please try again',
+              'error'
+            )
+          }
+        })
+        .then(data=>{
+          Swal.fire(
+            'Saved!',
+            'All changes saved successfully &#128526;',
+            'success'
+          )
+        });
     });
-    
 
-
-
-
+    // Redirect to dashboard when "Cancel" button is pressed
+    $('#cancel').click(function() {
+      location.href = 'dashboard';
+    });
   });
 </script>

@@ -42,4 +42,21 @@ def meraki(request):
     print(request.json())
 
     return HttpResponse("Hello, world. You're at the meraki index.")
+
+@login_required
+def insert_integrations(request):
+    integrations = json.loads(request.body)
+    for parameters in integrations:
+        obj, created = Integration.objects.select_for_update().update_or_create(
+            user = parameters['user'], product = parameters['product'],
+            defaults = {
+                'host': parameters['host'],
+                'ikey': parameters['ikey'],
+                'skey': parameters['skey'],
+                'username': parameters['username'],
+                'password': parameters['password'],
+                'enabled': parameters['enabled']
+            }
+        )
     
+    return HttpResponse("")
