@@ -63,6 +63,7 @@ def logout(request):
 def settings(request):
     user = request.user
     auth0user = user.social_auth.get(provider='auth0')#
+
     userdata = {
         'user_id': auth0user.uid,
         'name': user.first_name,
@@ -70,7 +71,7 @@ def settings(request):
         'email': auth0user.extra_data['email'],
     }
 
-    query_set = Integration.objects.filter(user='user_id').all()
+    query_set = Integration.objects.filter(user=userdata['user_id']).all()
     meraki_set = query_set.filter(product='meraki').all()
     ise_set = query_set.filter(product='ise').all()
     duo_set = query_set.filter(product='duo').all()
