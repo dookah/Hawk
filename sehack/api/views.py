@@ -12,4 +12,14 @@ import json
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. You're at the api index.")
+
+@login_required
+def meraki(request):
+    #Retrieve the user ID from the authenticated auth0 session
+    user = request.user
+    auth0user = user.social_auth.get(provider='auth0')
+    print(auth0user.uid);
+
+    
+    return HttpResponse("Hello, world. You're at the meraki index.")
     

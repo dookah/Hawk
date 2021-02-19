@@ -80,18 +80,48 @@
         <h1 class="title is-1 has-text-centered">Welcome <span class="has-text-white has-background-dark p-1">{{ user.username }}</span></h1>
     </div>
 
-    <div class="notification is-info is-light">
+    <div class="notification is-info is-light ">
       <button class="delete"></button>
       Hello there! We can see it's your first time visiting <strong>Hawk</strong>. You can monitor your role-based access control user of your Cisco products in the cards below. You can configure new integrations <strong><a href="/settings">here</a></strong>, don't worry you can change these later by clicking <strong>configure</strong> below the cards. Developed by Joshua Dean and Peter Morris for the Cisco Q3 SE hack.
     </div>
 
-    <section class="section">
-        <div class="logged-in-box auth0-box logged-in">
-            <h1 id="logo"><img src="//cdn.auth0.com/samples/auth0_logo_final_blue_RGB.png" /></h1>
-            <img class="avatar" src="{{ auth0User.extra_data.picture }}"/>
-            <h2>Welcome {{ user.username }}</h2>
-            <pre>{{ userdata }}</pre>
+    <section>
+      <h2 class="subtitle is-3 ">Integrations</h2>
+    
+      <div class="tile is-ancestor">
+        <div class="tile is-6 is-parent">
+          <div class="tile is-child">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image ">
+                  <img src="{% static 'meraki.png' %}" alt="Meraki" style="width: 60%; margin: 0 auto">
+                </figure>
+              </div>
+              <div class="card-content">
+                <p class="title is-4">Meraki</p>
+                <p class="subtitle is-6">Cisco Meraki Dashboard</p>
+              </div>
+              <footer class="card-footer">
+                <p class="card-footer-item">
+                  <span>
+                    <a href="https://twitter.com/codinghorror/status/506010907021828096">Configure</a>
+                  </span>
+                </p>
+                <p class="card-footer-item">
+                  <span>
+                    <a href="#">Close</a>
+                  </span>
+                </p>
+              </footer>
+            </div>
+          </div>
         </div>
+        <div class="tile is-6 is-parent">
+          <div class="tile is-child">
+            <p class="title">Three</p>
+          </div>
+        </div>
+      </div>
     </section>
 </div>
 
