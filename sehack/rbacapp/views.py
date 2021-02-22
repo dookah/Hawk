@@ -9,6 +9,8 @@ from urllib.parse import urlencode
 from .models import Integration
 from django.core import serializers
 import json
+from api import views as api
+import datetime
 
 def index(request):
 
@@ -32,9 +34,37 @@ def dashboard(request):
         'email': auth0user.extra_data['email'],
     }
 
+    try:
+        meraki = api.meraki(request)
+        for i in meraki:
+            i['lastActive'] = datetime.datetime.fromtimestamp(i['lastActive'])
+    except:
+        meraki = ""
+        print("Meraki API failed")
+
+    try:
+        duo = api.duo(request)
+    except:
+        duo = ""
+        print("Duo API failed")
+
+    try:
+        umbrella = api.umbrella(request)
+        for i in umbrella:
+            str_time = i['lastLoginTime']
+            d = datetime.datetime.strptime(str_time, "%Y-%m-%dT%H:%M:%S.%fZ")
+            i['lastLoginTime'] = d
+    except:
+        umbrella = ""
+        print("Umbrella API failed")
+
+
     return render(request, 'dashboard.html', {
         'auth0User': auth0user,
-        'userdata': json.dumps(userdata, indent=4)
+        'userdata': json.dumps(userdata, indent=4),
+        'meraki': meraki,
+        'duo': duo,
+        'umbrella': umbrella
     })
 
 @login_required

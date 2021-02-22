@@ -20,7 +20,7 @@
 </head>
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
+      <a class="navbar-item" href="/dashboard">
         <img src="static/hawk-forward.png" >
       </a>
   
@@ -32,44 +32,16 @@
     </div>
   
     <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item">
-          Home
-        </a>
-  
-        <a class="navbar-item">
-          Documentation
-        </a>
-  
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            More
-          </a>
-  
-          <div class="navbar-dropdown">
-            <a class="navbar-item">
-              About
-            </a>
-            <a class="navbar-item">
-              Jobs
-            </a>
-            <a class="navbar-item">
-              Contact
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item">
-              Report an issue
-            </a>
-          </div>
-        </div>
-      </div>
   
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-light" href="/dashboard">
-                <strong>Dashboard</strong>
-              </a>
+            <a class="button is-light" href="dashboard">
+              <strong>Dashboard</strong>
+            </a>
+            <a class="button is-light" href="profile">
+              <strong>Account</strong>
+            </a>
             <a class="button is-danger" href="logout">
               Log out
             </a>
@@ -121,7 +93,7 @@
                 <br>
                 <div class="field">
                   <label class="label">API key</label>
-                  <input class="input" type="text" placeholder="Enter API key here..." id="meraki_ikey" value="{{ meraki.0.ikey }}" disabled>
+                  <input class="input" type="password" placeholder="Enter API key here..." id="meraki_ikey" value="{{ meraki.0.ikey }}" disabled>
                 </div>
               </div>
             </div>
@@ -168,7 +140,7 @@
                 </div>
                 <div class="field">
                   <label class="label">Password</label>
-                  <input class="input" type="text" placeholder="Password" id="ise_password" value="{{ ise.0.password }}" disabled>
+                  <input class="input" type="password" placeholder="Password" id="ise_password" value="{{ ise.0.password }}" disabled>
                 </div>
               </div>
             </div>
@@ -219,7 +191,7 @@
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="duo_skey" value="{{ duo.0.skey }}" disabled>
+                  <input class="input" type="password" placeholder="skey" id="duo_skey" value="{{ duo.0.skey }}" disabled>
                 </div>
               </div>
             </div>
@@ -272,7 +244,7 @@
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="viptela_skey" value="{{ viptela.0.skey }}" disabled>
+                  <input class="input" type="password" placeholder="skey" id="viptela_skey" value="{{ viptela.0.skey }}" disabled>
                 </div>
               </div>
             </div>
@@ -323,7 +295,7 @@
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="umbrella_skey" value="{{ umbrella.0.skey }}" disabled>
+                  <input class="input" type="password" placeholder="skey" id="umbrella_skey" value="{{ umbrella.0.skey }}" disabled>
                 </div>
               </div>
             </div>
@@ -374,7 +346,7 @@
                 </div>
                 <div class="field">
                   <label class="label">skey</label>
-                  <input class="input" type="text" placeholder="skey" id="webex_skey" value="{{ webex.0.skey }}" disabled>
+                  <input class="input" type="password" placeholder="skey" id="webex_skey" value="{{ webex.0.skey }}" disabled>
                 </div>
               </div>
             </div>

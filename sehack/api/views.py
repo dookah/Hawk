@@ -10,6 +10,7 @@ from django.core import serializers
 from rbacapp.models import Integration
 import requests
 import json
+import sys, duo_client
 
 # Create your views here.
 def index(request):
@@ -25,13 +26,13 @@ def meraki(request):
     query_set = Integration.objects.filter(user=user_id).all()
     meraki_set = query_set.filter(product='meraki').all()
 
-    print(meraki_set.values())
+    parameters = meraki_set.values()[0]
 
 
     host = 'https://api.meraki.com/api/v0/organizations'
 
     headers = {
-        'X-Cisco-Meraki-API-Key' : ''
+        'X-Cisco-Meraki-API-Key' : parameters['ikey']
     }
     
     request = requests.get(host, headers=headers)
@@ -39,9 +40,63 @@ def meraki(request):
 
     path = '/' + org_id + '/admins'
     request = requests.get(host + path, headers=headers)
-    print(request.json())
 
-    return HttpResponse("Hello, world. You're at the meraki index.")
+    return request.json()
+
+@login_required
+def duo(request):
+    #Retrieve the user ID from the authenticated auth0 session
+    user = request.user
+    auth0user = user.social_auth.get(provider='auth0')
+    user_id = auth0user.uid;
+
+    query_set = Integration.objects.filter(user=user_id).all()
+    duo_set = query_set.filter(product='duo').all()
+
+    parameters = duo_set.values()[0]
+
+    admin_api = duo_client.Admin(
+        ikey=parameters['ikey'],
+        skey=parameters['skey'],
+        host=parameters['host']
+    )
+
+    output = admin_api.get_admins()
+
+    return output
+
+@login_required
+def umbrella(request):
+    #Retrieve the user ID from the authenticated auth0 session
+    user = request.user
+    auth0user = user.social_auth.get(provider='auth0')
+    user_id = auth0user.uid;
+
+    query_set = Integration.objects.filter(user=user_id).all()
+    umbrella_set = query_set.filter(product='umbrella').all()
+
+    parameters = umbrella_set.values()[0]
+
+    org = parameters['host']
+    ikey = parameters['ikey']
+    skey = parameters['skey']
+
+    host = 'https://management.api.umbrella.com/v1/organizations/' + org + '/users'
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+    
+    response = requests.get(host, auth=requests.models.HTTPBasicAuth(ikey, skey), headers=headers)
+
+    users = json.loads(response.text)
+    admins = []
+    for user in users:
+        if(user['role'] == 'Full Admin'):
+            admins.append(user)
+
+    return admins
 
 @login_required
 def insert_integrations(request):

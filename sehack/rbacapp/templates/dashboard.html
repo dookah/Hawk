@@ -16,7 +16,7 @@
 </head>
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
+      <a class="navbar-item" href="dashboard">
         <img src="static/hawk-forward.png" >
       </a>
   
@@ -28,44 +28,16 @@
     </div>
   
     <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item">
-          Home
-        </a>
-  
-        <a class="navbar-item">
-          Documentation
-        </a>
-  
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            More
-          </a>
-  
-          <div class="navbar-dropdown">
-            <a class="navbar-item">
-              About
-            </a>
-            <a class="navbar-item">
-              Jobs
-            </a>
-            <a class="navbar-item">
-              Contact
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item">
-              Report an issue
-            </a>
-          </div>
-        </div>
-      </div>
   
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
+            <a class="button is-light" href="settings">
+              <strong>Settings</strong>
+            </a>
             <a class="button is-light" href="profile">
-                <strong>Account</strong>
-              </a>
+              <strong>Account</strong>
+            </a>
             <a class="button is-danger" href="logout">
               Log out
             </a>
@@ -82,14 +54,14 @@
 
     <div class="notification is-info is-light ">
       <button class="delete"></button>
-      Hello there! We can see it's your first time visiting <strong>Hawk</strong>. You can monitor your role-based access control user of your Cisco products in the cards below. You can configure new integrations <strong><a href="/settings">here</a></strong>, don't worry you can change these later by clicking <strong>configure</strong> below the cards. Developed by Joshua Dean and Peter Morris for the Cisco Q3 SE hack.
+      Hello there! We can see it's your first time visiting <strong>Hawk</strong>. You can monitor administrators of your Cisco products in the cards below. You can configure new integrations <strong><a href="settings">here</a></strong> – don't worry, you can change these at any time by clicking <strong><a href="settings">Settings</a></strong>.
     </div>
 
     <section>
       <h2 class="subtitle is-3 ">Integrations</h2>
     
       <div class="tile is-ancestor">
-        <div class="tile is-6 is-parent">
+        <div class="tile is-3 is-parent">
           <div class="tile is-child">
             <div class="card">
               <div class="card-image">
@@ -101,27 +73,102 @@
                 <p class="title is-4">Meraki</p>
                 <p class="subtitle is-6">Cisco Meraki Dashboard</p>
               </div>
-              <footer class="card-footer">
-                <p class="card-footer-item">
-                  <span>
-                    <a href="/settings">Configure</a>
-                  </span>
-                </p>
-                <p class="card-footer-item">
-                  <span>
-                    <a href="#">Hide</a>
-                  </span>
-                </p>
-              </footer>
             </div>
           </div>
         </div>
-        <div class="tile is-6 is-parent">
+        <div class="tile is-9 is-parent">
           <div class="tile is-child">
-            <p class="title">Three</p>
+            <p class="subtitle">{{ meraki|length }} administrator{% if meraki|length != 1 %}s{% endif %} configured:</p>
+            <div class="content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Auth</th>
+                    <th>Access</th>
+                    <th>Status</th>
+                    <th>2FA</th>
+                    <th>API</th>
+                    <th>Last seen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in meraki %}
+                    <tr>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.authenticationMethod }}</td>
+                      <td>{{ user.orgAccess }}</td>
+                      <td>{{ user.accountStatus }}</td>
+                      <td>{{ user.twoFactorAuthEnabled }}</td>
+                      <td>{{ user.hasApiKey }}</td>
+                      <td>{{ user.lastActive }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
+
+
+
+
+      <div class="tile is-ancestor">
+        <div class="tile is-3 is-parent">
+          <div class="tile is-child">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image ">
+                  <img src="{% static 'umbrella.png' %}" alt="Umbrella" style="width: 50%; margin: 0 auto">
+                </figure>
+              </div>
+              <div class="card-content">
+                <p class="title is-4">Umbrella</p>
+                <p class="subtitle is-6">Cisco Umbrella</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tile is-9 is-parent">
+          <div class="tile is-child">
+            <p class="subtitle">{{ umbrella|length }} administrator{% if umbrella|length != 1 %}s{% endif %} configured:</p>
+            <div class="content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>2FA</th>
+                    <th>Last seen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in umbrella %}
+                    <tr>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.firstname }} {{ user.lastname }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.role }}</td>
+                      <td>{{ user.status }}</td>
+                      <td>{{ user.twoFactorEnable }}</td>
+                      <td>{{ user.lastLoginTime }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 </div>
 
