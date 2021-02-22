@@ -4,7 +4,7 @@ from django.contrib.auth import logout as log_out
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.conf import settings
+from django.conf import settings as django_settings
 from urllib.parse import urlencode
 from .models import Integration
 from django.core import serializers
@@ -87,7 +87,7 @@ def logout(request):
     log_out(request)
     return_to = urlencode({'returnTo': request.build_absolute_uri('/')})
     logout_url = 'https://%s/v2/logout?client_id=%s&%s' % \
-                 (settings.SOCIAL_AUTH_AUTH0_DOMAIN, settings.SOCIAL_AUTH_AUTH0_KEY, return_to)
+                 (django_settings.SOCIAL_AUTH_AUTH0_DOMAIN, django_settings.SOCIAL_AUTH_AUTH0_KEY, return_to)
     return HttpResponseRedirect(logout_url)
 
 def settings(request):
