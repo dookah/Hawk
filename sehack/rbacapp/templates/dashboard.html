@@ -60,6 +60,7 @@
     <section>
       <h2 class="subtitle is-3 ">Integrations</h2>
     
+      {% if enabled.meraki == True %}
       <div class="tile is-ancestor">
         <div class="tile is-3 is-parent">
           <div class="tile is-child">
@@ -114,10 +115,14 @@
           </div>
         </div>
       </div>
+      {% elif enabled.meraki == 'error' %}
+      <div class="notification is-danger">
+        <button class="delete"></button>
+        There was an error communicating with the <strong>Meraki</strong> API – please check your credentials are correct in the <strong><a href="settings">Settings</a></strong> page.
+      </div>
+      {% endif %}
 
-
-
-
+      {% if enabled.umbrella == True %}
       <div class="tile is-ancestor">
         <div class="tile is-3 is-parent">
           <div class="tile is-child">
@@ -168,6 +173,12 @@
           </div>
         </div>
       </div>
+      {% elif enabled.umbrella == 'error' %}
+      <div class="notification is-danger">
+        <button class="delete"></button>
+        There was an error communicating with the <strong>Umbrella</strong> API – please check your credentials are correct in the <strong><a href="settings">Settings</a></strong> page.
+      </div>
+      {% endif %}
 
     </section>
 </div>

@@ -135,6 +135,10 @@
                 </div>
                 <br>
                 <div class="field">
+                  <label class="label">Host</label>
+                  <input class="input" type="text" placeholder="Host IP" id="ise_host" value="{{ ise.0.host }}" disabled>
+                </div>
+                <div class="field">
                   <label class="label">Username</label>
                   <input class="input" type="text" placeholder="Username" id="ise_username" value="{{ ise.0.username }}" disabled>
                 </div>
@@ -401,6 +405,7 @@
     }
     if("{{ ise.0.enabled }}" == "True") {
       $("input[name='ise'][value='enabled']").prop('checked', true);
+      $('#ise_host').prop('disabled', false);
       $('#ise_username').prop('disabled', false);
       $('#ise_password').prop('disabled', false);
     }
@@ -441,9 +446,11 @@
     $("input[name='ise']").click(function() {
       var radio = $("input[name='ise']:checked").val();
       if(radio=="enabled") {
+        $('#ise_host').prop('disabled', false);
         $('#ise_username').prop('disabled', false);
         $('#ise_password').prop('disabled', false);
       } else if(radio=="disabled") {
+        $('#ise_host').prop('disabled', true);
         $('#ise_username').prop('disabled', true);
         $('#ise_password').prop('disabled', true);
       }
