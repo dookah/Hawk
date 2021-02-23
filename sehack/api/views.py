@@ -44,6 +44,29 @@ def meraki(request):
     return request.json()
 
 @login_required
+def ise(request):
+    #Retrieve the user ID from the authenticated auth0 session
+    user = request.user
+    auth0user = user.social_auth.get(provider='auth0')
+    user_id = auth0user.uid;
+
+    query_set = Integration.objects.filter(user=user_id).all()
+    ise_set = query_set.filter(product='ise').all()
+
+    parameters = ise_set.values()[0]
+
+    host = 'https://' + parameters['host'] + ':9060/ers/config/adminuser'
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    request = requests.get(host, auth=(parameters['username'], parameters['password']), headers=headers, verify=False)
+
+    return request.json()
+
+@login_required
 def duo(request):
     #Retrieve the user ID from the authenticated auth0 session
     user = request.user

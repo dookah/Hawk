@@ -62,6 +62,15 @@ def dashboard(request):
             meraki = ""
             enabled['meraki'] = 'error'
             print("Meraki API failed")
+    
+    if(list(ise_set.values())[0]['enabled'] == True):
+        try:
+            ise = api.ise(request)
+            enabled['ise'] = True
+        except:
+            ise = ""
+            enabled['ise'] = 'error'
+            print("ISE API failed")
 
     if(list(duo_set.values())[0]['enabled'] == True):
         try:
@@ -90,6 +99,7 @@ def dashboard(request):
         'userdata': json.dumps(userdata, indent=4),
         'enabled': enabled,
         'meraki': meraki,
+        'ise': ise,
         'duo': duo,
         'umbrella': umbrella
     })
