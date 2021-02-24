@@ -2,9 +2,11 @@
     <title>Hawk - SE Hack</title>
     <!-- Bulma Import -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    
     <!-- Image Import-->
     {% load static %}
-    
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}" />
     <link rel="shortcut icon" href="{% static 'favicon.png' %}"/>
 
     <style>
@@ -61,25 +63,43 @@
       <h2 class="subtitle is-3 ">Integrations</h2>
     
       {% if enabled.meraki == True %}
-      <div class="tile is-ancestor">
-        <div class="tile is-3 is-parent">
+      <div class="tile is-ancestor card">
+        <div class="tile is-3 is-parent has-background-light">
           <div class="tile is-child">
-            <div class="card">
               <div class="card-image">
                 <figure class="image ">
-                  <img src="{% static 'meraki.png' %}" alt="Meraki" style="width: 50%; margin: 0 auto">
+                  <img src="{% static 'meraki.png' %}" alt="Meraki" style="width: 70%; margin: 0 auto">
                 </figure>
               </div>
+              <div class="separator">Settings</div>
               <div class="card-content">
-                <p class="title is-4">Meraki</p>
-                <p class="subtitle is-6">Cisco Meraki Dashboard</p>
+                <a href="https://account.meraki.com/secure/login/dashboard_login">
+                  <button class="button is-dark is-fullwidth"> 
+                    <span class="icon">
+                      <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>Meraki</span>
+                  </button>
+                </a>
+                <a href="/settings">
+                  <button class="button is-dark is-fullwidth"> 
+                    <span class="icon">
+                      <i class="fas fa-cog"></i>
+                    </span>
+                    <span>Configure</span>
+                  </button>
+                </a>
               </div>
-            </div>
+            
           </div>
         </div>
         <div class="tile is-9 is-parent">
           <div class="tile is-child">
-            <p class="subtitle">{{ meraki|length }} administrator{% if meraki|length != 1 %}s{% endif %} configured:</p>
+            <p class="subtitle has-text-right">
+              <div class="tags has-addons">
+                <span class="tag is-medium">Administators</span>
+                <span class="tag is-dark is-medium">{{ meraki|length }}</span>
+              </div>
             <div class="content">
               <table>
                 <thead>
