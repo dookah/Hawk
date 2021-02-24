@@ -51,48 +51,68 @@ def dashboard(request):
         'webex': False
     }
     meraki, ise, duo, viptela, umbrella, webex = "", "", "", "", "", ""
+    try:
+        if(list(meraki_set.values())[0]['enabled'] == True):
+            try:
+                meraki = api.meraki(request)
 
-    if(list(meraki_set.values())[0]['enabled'] == True):
-        try:
-            meraki = api.meraki(request)
-            for i in meraki:
-                i['lastActive'] = datetime.datetime.fromtimestamp(i['lastActive'])
-            enabled['meraki'] = True
-        except:
-            meraki = ""
-            enabled['meraki'] = 'error'
-            print("Meraki API failed")
-    
-    if(list(ise_set.values())[0]['enabled'] == True):
-        try:
-            ise = api.ise(request)
-            enabled['ise'] = True
-        except:
-            ise = ""
-            enabled['ise'] = 'error'
-            print("ISE API failed")
+                
+                for i in meraki:
+                    if i['lastActive'] is not "":
+                        i['lastActive'] = datetime.datetime.fromtimestamp(i['lastActive'])
+                    
 
-    if(list(duo_set.values())[0]['enabled'] == True):
-        try:
-            duo = api.duo(request)
-            enabled['duo'] = True
-        except:
-            duo = ""
-            enabled['duo'] = 'error'
-            print("Duo API failed")
+                    
 
-    if(list(umbrella_set.values())[0]['enabled'] == True):
-        try:
-            umbrella = api.umbrella(request)
-            for i in umbrella:
-                str_time = i['lastLoginTime']
-                d = datetime.datetime.strptime(str_time, "%Y-%m-%dT%H:%M:%S.%fZ")
-                i['lastLoginTime'] = d
-            enabled['umbrella'] = True
-        except:
-            umbrella = ""
-            enabled['umbrella'] = 'error'
-            print("Umbrella API failed")
+
+
+                enabled['meraki'] = True
+            except:
+                meraki = ""
+                enabled['meraki'] = 'error'
+                print("Meraki API failed")
+    except:
+        print("error")
+
+    try:
+        if(list(ise_set.values())[0]['enabled'] == True):
+            try:
+                ise = api.ise(request)
+                enabled['ise'] = True
+            except:
+                ise = ""
+                enabled['ise'] = 'error'
+                print("ISE API failed")
+    except:
+        print("error")
+
+    try:
+        if(list(duo_set.values())[0]['enabled'] == True):
+            try:
+                duo = api.duo(request)
+                enabled['duo'] = True
+            except:
+                duo = ""
+                enabled['duo'] = 'error'
+                print("Duo API failed")
+    except:
+        print("error")
+
+    try:
+        if(list(umbrella_set.values())[0]['enabled'] == True):
+            try:
+                umbrella = api.umbrella(request)
+                for i in umbrella:
+                    str_time = i['lastLoginTime']
+                    d = datetime.datetime.strptime(str_time, "%Y-%m-%dT%H:%M:%S.%fZ")
+                    i['lastLoginTime'] = d
+                enabled['umbrella'] = True
+            except:
+                umbrella = ""
+                enabled['umbrella'] = 'error'
+                print("Umbrella API failed")
+    except:
+        print("error")
 
     return render(request, 'dashboard.html', {
         'auth0User': auth0user,

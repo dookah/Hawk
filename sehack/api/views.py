@@ -28,6 +28,8 @@ def meraki(request):
 
     parameters = meraki_set.values()[0]
 
+    
+
 
     host = 'https://api.meraki.com/api/v0/organizations'
 
@@ -36,10 +38,15 @@ def meraki(request):
     }
     
     request = requests.get(host, headers=headers)
+
+    
+
     org_id = request.json()[0]['id']
 
     path = '/' + org_id + '/admins'
     request = requests.get(host + path, headers=headers)
+
+    
 
     return request.json()
 
