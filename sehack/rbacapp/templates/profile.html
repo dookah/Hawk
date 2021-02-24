@@ -15,103 +15,71 @@
     </style>
 </head>
 <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-      </a>
-  
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-  
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item">
-          Home
-        </a>
-  
-        <a class="navbar-item">
-          Documentation
-        </a>
-  
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            More
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/dashboard">
+      <img src="static/hawk-forward.png" >
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-light" href="dashboard">
+            <strong>Dashboard</strong>
           </a>
-  
-          <div class="navbar-dropdown">
-            <a class="navbar-item">
-              About
-            </a>
-            <a class="navbar-item">
-              Jobs
-            </a>
-            <a class="navbar-item">
-              Contact
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item">
-              Report an issue
-            </a>
-          </div>
-        </div>
-      </div>
-  
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <a href="/dashboard" class="button is-light" href="profile">
-                <strong>Dashboard</strong>
-              </a>
-            <a class="button is-danger" href="logout">
-              Log out
-            </a>
-          </div>
+          <a class="button is-light" href="settings">
+            <strong>Settings</strong>
+          </a>
+          <a class="button is-danger" href="logout">
+            Log out
+          </a>
         </div>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 <div class="container">
-    <section class="section box has-background-light m-2">
+  <div class="container mt-6">
+      <section class="section box has-background-light m-2">
 
-        <div class="columns is-vcentered">
-            <div class="column is-one-fifth">
-                <figure class="image is-128x128 has-image-centered">
-                    <img class="has-text-centered " src="{% static 'hawk.png' %}" alt="hawk observing">
-                </figure>
-            </div>
-            <div class="column">
-                <h1 class="is-size-1 has-text-weight-bold is-family-monospace">Your Account</h1>
-                <h2 class="is-family-monospace">Welcome to your account page. You can manage all details of your account here,  </h2>
-            </div>
-        </div>
-        
-    
-    
-        <figure class="image has-image-centered is-128x128">
-            <img class="is-rounded " src="{{ auth0User.extra_data.picture }}">
-        </figure>
-        <div class="field">
-            <label class="label">Name</label>
-            <div class="control">
-              <input class="input disabled" type="text" value="{{ user.username }}">
-            </div>
-            <p class="help">This is a help text</p>
+          <div class="columns is-vcentered">
+              <div class="column">
+                <div class="columns">
+                  <div class="column is-4">
+                    <figure class="image has-image-centered is-128x128">
+                      <img class="is-rounded " src="{{ auth0User.extra_data.picture }}">
+                    </figure>
+                  </div>
+                  <div class="column">
+                    <h1 class="is-size-1 has-text-weight-bold is-family-monospace">Your Account</h1>
+                    <h2 class="is-family-monospace">Welcome to your account page. You can manage all details of your account here:</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <label class="label">Name</label>
+                  <div class="control">
+                    <input class="input disabled" type="text" value="{{ user.username }}">
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Email</label>
+                  <div class="control">
+                    <input class="input disabled" type="text" value="{{ user.email }}">
+                  </div>
+                </div>
+              </div>
           </div>
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-              <input class="input disabled" type="text" value="{{ user.email }}">
-            </div>
-            <p class="help">This is a help text</p>
-          </div>
-    </section>
-</div>
 
-    
-    <h2>Welcome {{ user.username }}</h2>
-    <pre>{{ userdata }}</pre>
+      </section>
+  </div>
 </div>
