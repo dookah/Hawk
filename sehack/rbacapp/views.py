@@ -145,6 +145,7 @@ def dashboard(request):
         names_anomalies = []
         emails_anomalies = []
 
+    ise_host = ''
     try:
         # Get ISE host for dashboard link
         ise_host = ise_set.values()[0]['host']
