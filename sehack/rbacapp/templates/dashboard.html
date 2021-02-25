@@ -89,7 +89,7 @@
       <h2 class="subtitle is-3 ">Integrations</h2>
     
       {% if enabled.meraki == True %}
-      <div class="tile is-ancestor card mt-6">
+      <div class="tile is-ancestor card my-6">
         <div class="tile is-3 is-parent has-background-light">
           <div class="tile is-child">
             <div class="card-image">
@@ -161,7 +161,7 @@
       {% endif %}
 
       {% if enabled.ise == True %}
-      <div class="tile is-ancestor card mt-6">
+      <div class="tile is-ancestor card my-6">
         <div class="tile is-3 is-parent has-background-light">
           <div class="tile is-child">
             <div class="card-image">
@@ -171,7 +171,7 @@
             </div>
             <div class="separator">Tools</div>
             <div class="card-content">
-              <a href="https://google.com">
+              <a href="https://{{ ise_host }}/admin">
                 <button class="button is-dark is-fullwidth">
                   <span class="icon">
                     <i class="fas fa-external-link-alt"></i>
@@ -223,7 +223,7 @@
       {% endif %}
 
       {% if enabled.umbrella == True %}
-      <div class="tile is-ancestor card mt-6">
+      <div class="tile is-ancestor card my-6">
         <div class="tile is-3 is-parent has-background-light">
           <div class="tile is-child">
             <div class="card-image">
