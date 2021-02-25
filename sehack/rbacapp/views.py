@@ -11,6 +11,7 @@ from django.core import serializers
 import json
 from api import views as api
 import datetime
+import traceback
 
 def index(request):
 
@@ -19,9 +20,25 @@ def index(request):
     }
 
     return render(request, 'index.html', ctx)
-    
-# Create your views here.
 
+# Utility function for counting names / emails
+def increment_or_append(list, string):
+    for i in list:
+        if(string == i[0]):
+            i[1] = i[1] + 1
+            return list
+    list.append([string, 1])
+    return list
+
+# Utility function for detecting anomalies in names / emails
+def find_anomalies(list):
+    anomalies = []
+    for i in list:
+        if(i[1] == 1):
+            anomalies.append(i[0])
+    return anomalies
+
+# Create your views here.
 
 @login_required
 def dashboard(request):
@@ -50,22 +67,19 @@ def dashboard(request):
         'umbrella': False,
         'webex': False
     }
+
+    names, emails = [], []
+
     meraki, ise, duo, viptela, umbrella, webex = "", "", "", "", "", ""
     try:
         if(list(meraki_set.values())[0]['enabled'] == True):
             try:
                 meraki = api.meraki(request)
-
-                
                 for i in meraki:
                     if i['lastActive'] is not "":
                         i['lastActive'] = datetime.datetime.fromtimestamp(i['lastActive'])
-                    
-
-                    
-
-
-
+                    names = increment_or_append(names, i['name'])
+                    emails = increment_or_append(emails, i['email'])
                 enabled['meraki'] = True
             except:
                 meraki = ""
@@ -78,6 +92,8 @@ def dashboard(request):
         if(list(ise_set.values())[0]['enabled'] == True):
             try:
                 ise = api.ise(request)
+                for i in ise:
+                    names = increment_or_append(names, i['name'])
                 enabled['ise'] = True
             except:
                 ise = ""
@@ -106,6 +122,9 @@ def dashboard(request):
                     str_time = i['lastLoginTime']
                     d = datetime.datetime.strptime(str_time, "%Y-%m-%dT%H:%M:%S.%fZ")
                     i['lastLoginTime'] = d
+                    fullname = str(i['firstname']) + ' ' + str(i['lastname'])
+                    names = increment_or_append(names, fullname)
+                    emails = increment_or_append(emails, i['email'])
                 enabled['umbrella'] = True
             except:
                 umbrella = ""
@@ -114,6 +133,19 @@ def dashboard(request):
     except:
         print("error")
 
+    names_anomalies = find_anomalies(names)
+    emails_anomalies = find_anomalies(emails)
+
+    # If only one product is configured, there should be no anomalies
+    enabled_count = 0
+    for product in enabled:
+        if(enabled[product] == True):
+            enabled_count = enabled_count + 1
+    if(enabled_count == 1):
+        names_anomalies = []
+        emails_anomalies = []
+
+
     return render(request, 'dashboard.html', {
         'auth0User': auth0user,
         'userdata': json.dumps(userdata, indent=4),
@@ -121,7 +153,9 @@ def dashboard(request):
         'meraki': meraki,
         'ise': ise,
         'duo': duo,
-        'umbrella': umbrella
+        'umbrella': umbrella,
+        'names_anomalies': names_anomalies,
+        'emails_anomalies': emails_anomalies
     })
 
 @login_required

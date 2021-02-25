@@ -59,6 +59,32 @@
       Hello there! We can see it's your first time visiting <strong>Hawk</strong>. You can monitor administrators of your Cisco products in the cards below. You can configure new integrations <strong><a href="settings">here</a></strong> – don't worry, you can change these at any time by clicking <strong><a href="settings">Settings</a></strong>.
     </div>
 
+    {% if names_anomalies|length > 0 or emails_anomalies|length > 0 %}
+    <div class="notification is-warning is-light">
+      <button class="delete"></button>
+      {% if names_anomalies|length > 0 %}
+      The following names were only found once:
+      <div class="content">
+        <ul>
+          {% for name in names_anomalies %}
+          <li>{{ name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% if emails_anomalies|length > 0 %}
+      The following emails were only found once:
+      <div class="content">
+        <ul>
+          {% for email in emails_anomalies %}
+          <li>{{ email }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
     <section>
       <h2 class="subtitle is-3 ">Integrations</h2>
     
