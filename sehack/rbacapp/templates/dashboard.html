@@ -89,43 +89,35 @@
       <h2 class="subtitle is-3 ">Integrations</h2>
     
       {% if enabled.meraki == True %}
-      <div class="tile is-ancestor card">
+      <div class="tile is-ancestor card mt-6">
         <div class="tile is-3 is-parent has-background-light">
           <div class="tile is-child">
-              <div class="card-image">
-                <figure class="image ">
-                  <img src="{% static 'meraki.png' %}" alt="Meraki" style="width: 70%; margin: 0 auto">
-                </figure>
-              </div>
-              <div class="separator">Settings</div>
-              <div class="card-content">
-                <a href="https://account.meraki.com/secure/login/dashboard_login">
-                  <button class="button is-dark is-fullwidth"> 
-                    <span class="icon">
-                      <i class="fas fa-external-link-alt"></i>
-                    </span>
-                    <span>Meraki</span>
-                  </button>
-                </a>
-                <a href="/settings">
-                  <button class="button is-dark is-fullwidth"> 
-                    <span class="icon">
-                      <i class="fas fa-cog"></i>
-                    </span>
-                    <span>Configure</span>
-                  </button>
-                </a>
-              </div>
-            
+            <div class="card-image">
+              <figure class="image ">
+                <img src="{% static 'meraki.png' %}" alt="Meraki" style="width: 70%; margin: 0 auto">
+              </figure>
+            </div>
+            <div class="separator">Tools</div>
+            <div class="card-content">
+              <a href="https://account.meraki.com/secure/login/dashboard_login">
+                <button class="button is-dark is-fullwidth"> 
+                  <span class="icon">
+                    <i class="fas fa-external-link-alt"></i>
+                  </span>
+                  <span>Dashboard</span>
+                </button>
+              </a>
+            </div>
           </div>
         </div>
         <div class="tile is-9 is-parent">
           <div class="tile is-child">
             <p class="subtitle has-text-right">
               <div class="tags has-addons">
-                <span class="tag is-medium">Administators</span>
+                <span class="tag is-medium">Administrators</span>
                 <span class="tag is-dark is-medium">{{ meraki|length }}</span>
               </div>
+            </p>
             <div class="content">
               <table>
                 <thead>
@@ -169,25 +161,35 @@
       {% endif %}
 
       {% if enabled.ise == True %}
-      <div class="tile is-ancestor">
-        <div class="tile is-3 is-parent">
+      <div class="tile is-ancestor card mt-6">
+        <div class="tile is-3 is-parent has-background-light">
           <div class="tile is-child">
-            <div class="card">
-              <div class="card-image">
-                <figure class="image ">
-                  <img src="{% static 'ise.png' %}" alt="ISE" style="width: 50%; margin: 0 auto">
-                </figure>
-              </div>
-              <div class="card-content">
-                <p class="title is-4">ISE</p>
-                <p class="subtitle is-6">Cisco Identity Services Engine</p>
-              </div>
+            <div class="card-image">
+              <figure class="image ">
+                <img src="{% static 'ise.png' %}" alt="ISE" style="width: 50%; margin: 0 auto">
+              </figure>
+            </div>
+            <div class="separator">Tools</div>
+            <div class="card-content">
+              <a href="https://google.com">
+                <button class="button is-dark is-fullwidth">
+                  <span class="icon">
+                    <i class="fas fa-external-link-alt"></i>
+                  </span>
+                  <span>Dashboard</span>
+                </button>
+              </a>
             </div>
           </div>
         </div>
         <div class="tile is-9 is-parent">
           <div class="tile is-child">
-            <p class="subtitle">{{ ise.SearchResult.resources|length }} administrator{% if ise.SearchResult.resources|length != 1 %}s{% endif %} configured:</p>
+            <p class="subtitle has-text-right">
+              <div class="tags has-addons">
+                <span class="tag is-medium">Administrators</span>
+                <span class="tag is-dark is-medium">{{ meraki|length }}</span>
+              </div>
+            </p>
             <div class="content">
               <table>
                 <thead>
@@ -221,25 +223,35 @@
       {% endif %}
 
       {% if enabled.umbrella == True %}
-      <div class="tile is-ancestor">
-        <div class="tile is-3 is-parent">
+      <div class="tile is-ancestor card mt-6">
+        <div class="tile is-3 is-parent has-background-light">
           <div class="tile is-child">
-            <div class="card">
-              <div class="card-image">
-                <figure class="image ">
-                  <img src="{% static 'umbrella.png' %}" alt="Umbrella" style="width: 50%; margin: 0 auto">
-                </figure>
-              </div>
-              <div class="card-content">
-                <p class="title is-4">Umbrella</p>
-                <p class="subtitle is-6">Cisco Umbrella</p>
-              </div>
+            <div class="card-image">
+              <figure class="image ">
+                <img src="{% static 'umbrella.png' %}" alt="Umbrella" style="width: 50%; margin: 0 auto">
+              </figure>
+            </div>
+            <div class="separator">Tools</div>
+            <div class="card-content">
+              <a href="https://dashboard.umbrella.com">
+                <button class="button is-dark is-fullwidth">
+                  <span class="icon">
+                    <i class="fas fa-external-link-alt"></i>
+                  </span>
+                  <span>Dashboard</span>
+                </button>
+              </a>
             </div>
           </div>
         </div>
         <div class="tile is-9 is-parent">
           <div class="tile is-child">
-            <p class="subtitle">{{ umbrella|length }} administrator{% if umbrella|length != 1 %}s{% endif %} configured:</p>
+            <p class="subtitle has-text-right">
+              <div class="tags has-addons">
+                <span class="tag is-medium">Administrators</span>
+                <span class="tag is-dark is-medium">{{ umbrella|length }}</span>
+              </div>
+            </p>
             <div class="content">
               <table>
                 <thead>
