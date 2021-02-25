@@ -145,6 +145,12 @@ def dashboard(request):
         names_anomalies = []
         emails_anomalies = []
 
+    try:
+        # Get ISE host for dashboard link
+        ise_host = ise_set.values()[0]['host']
+    except:
+        print("error")
+    
 
     return render(request, 'dashboard.html', {
         'auth0User': auth0user,
@@ -155,7 +161,8 @@ def dashboard(request):
         'duo': duo,
         'umbrella': umbrella,
         'names_anomalies': names_anomalies,
-        'emails_anomalies': emails_anomalies
+        'emails_anomalies': emails_anomalies,
+        'ise_host': ise_host
     })
 
 @login_required
