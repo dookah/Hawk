@@ -129,6 +129,29 @@ def umbrella(request):
     return admins
 
 @login_required
+def viptela(request):
+    #Retrieve the user ID from the authenticated auth0 session
+    user = request.user
+    auth0user = user.social_auth.get(provider='auth0')
+    user_id = auth0user.uid
+
+    #Get a security token from vManage
+    auth_url = 'https://sandbox-sdwan-1.cisco.com/j_security_check'
+    auth_payload = "j_username=devnetuser&j_password=RG!_Yw919_83"
+    auth_header = {
+        'Content-Type' : 'application/x-www-form-urlencoded'
+    }
+    auth_response = requests.request("POST", auth_url, headers=auth_header, data = auth_payload)
+
+    print(auth_response.cookies)
+
+    CSRF_url = 'https://sandbox-sdwan-1.cisco.com/dataservice/client/token'
+    
+
+    return HttpResponse(auth_response)
+
+
+@login_required
 def insert_integrations(request):
     integrations = json.loads(request.body)
     for parameters in integrations:
