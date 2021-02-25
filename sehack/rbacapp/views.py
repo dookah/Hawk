@@ -132,6 +132,18 @@ def dashboard(request):
                 print("Umbrella API failed")
     except:
         print("error")
+    
+    try:
+        if(list(viptela_set.values())[0]['enabled'] == True):
+            try:
+                viptela = api.viptela(request)
+                enabled['viptela'] = True
+            except:
+                viptela = ""
+                enabled['viptela'] = 'error'
+                print("Viptela API failed")
+    except:
+        print("error")
 
     names_anomalies = find_anomalies(names)
     emails_anomalies = find_anomalies(emails)
@@ -152,6 +164,13 @@ def dashboard(request):
     except:
         print("error")
     
+    viptela_host = ''
+    try:
+        # Get Viptela host for dashboard link
+        viptela_host = viptela_set.values()[0]['host']
+    except:
+        print("error")
+    
 
     return render(request, 'dashboard.html', {
         'auth0User': auth0user,
@@ -161,9 +180,11 @@ def dashboard(request):
         'ise': ise,
         'duo': duo,
         'umbrella': umbrella,
+        'viptela': viptela,
         'names_anomalies': names_anomalies,
         'emails_anomalies': emails_anomalies,
-        'ise_host': ise_host
+        'ise_host': ise_host,
+        'viptela_host' : viptela_host
     })
 
 @login_required

@@ -290,6 +290,66 @@
       </div>
       {% endif %}
 
+      {% if enabled.viptela == True %}
+      <div class="tile is-ancestor card my-6">
+        <div class="tile is-3 is-parent has-background-light">
+          <div class="tile is-child">
+            <div class="card-image">
+              <figure class="image ">
+                <img src="{% static 'viptela.png' %}" alt="Viptela" style="width: 50%; margin: 0 auto">
+              </figure>
+            </div>
+            <div class="separator">Tools</div>
+            <div class="card-content">
+              <a href="https://{{ viptela_host }}">
+                <button class="button is-dark is-fullwidth">
+                  <span class="icon">
+                    <i class="fas fa-external-link-alt"></i>
+                  </span>
+                  <span>Dashboard</span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="tile is-9 is-parent">
+          <div class="tile is-child">
+            <p class="subtitle has-text-right">
+              <div class="tags has-addons">
+                <span class="tag is-medium">Administrators</span>
+                <span class="tag is-dark is-medium">{{ viptela|length }}</span>
+              </div>
+            </p>
+            <div class="content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Description</th>
+                    <th>Groups</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in viptela %}
+                    <tr>
+                      <td>{{ user.userName }}</td>
+                      <td>{{ user.description }}</td>
+                      <td>{{ user.group }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% elif enabled.viptela == 'error' %}
+      <div class="notification is-danger">
+        <button class="delete"></button>
+        There was an error communicating with the <strong>Viptela</strong> API – please check your credentials are correct in the <strong><a href="settings">Settings</a></strong> page.
+      </div>
+      {% endif %}
+
     </section>
 </div>
 

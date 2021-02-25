@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from urllib.parse import urlencode
 from django.core import serializers
+from requests.api import head
 from rbacapp.models import Integration
 import requests
 import json
@@ -135,20 +136,44 @@ def viptela(request):
     auth0user = user.social_auth.get(provider='auth0')
     user_id = auth0user.uid
 
+    query_set = Integration.objects.filter(user=user_id).all()
+    viptela_set = query_set.filter(product='viptela').all()
+
+    parameters = viptela_set.values()[0]
+
+    host = parameters['host']
+    username = parameters['username']
+    password = parameters['password']
+    root = 'https://' + host
+
     #Get a security token from vManage
-    auth_url = 'https://sandbox-sdwan-1.cisco.com/j_security_check'
-    auth_payload = "j_username=devnetuser&j_password=RG!_Yw919_83"
+    auth_url = root + '/j_security_check'
+    auth_payload = 'j_username=' + username + '&j_password=' + password
     auth_header = {
         'Content-Type' : 'application/x-www-form-urlencoded'
     }
     auth_response = requests.request("POST", auth_url, headers=auth_header, data = auth_payload)
 
-    print(auth_response.cookies)
+    cookie = auth_response.cookies.items()[0][0] + '=' + auth_response.cookies.items()[0][1]
 
-    CSRF_url = 'https://sandbox-sdwan-1.cisco.com/dataservice/client/token'
+    cookie_header = {
+        'Cookie' : cookie
+    }
+
+    CSRF_url = root + '/dataservice/client/token'
     
+    token_response = requests.request("GET", CSRF_url, headers=cookie_header, data=auth_payload)
+    token = token_response.text
 
-    return HttpResponse(auth_response)
+    url = root + ':443/dataservice/admin/user'
+    headers = {
+        'X-XSRF-TOKEN': token,
+        'Cookie': cookie
+    }
+
+    response = requests.request("GET", url, headers=headers)
+
+    return response.json()['data']
 
 
 @login_required

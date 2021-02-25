@@ -243,12 +243,12 @@
                   <input class="input" type="text" placeholder="Hostname" id="viptela_host" value="{{ viptela.0.host }}" disabled>
                 </div>
                 <div class="field">
-                  <label class="label">ikey</label>
-                  <input class="input" type="text" placeholder="ikey" id="viptela_ikey" value="{{ viptela.0.ikey }}" disabled>
+                  <label class="label">Username</label>
+                  <input class="input" type="text" placeholder="Username" id="viptela_username" value="{{ viptela.0.username }}" disabled>
                 </div>
                 <div class="field">
-                  <label class="label">skey</label>
-                  <input class="input" type="password" placeholder="skey" id="viptela_skey" value="{{ viptela.0.skey }}" disabled>
+                  <label class="label">Password</label>
+                  <input class="input" type="password" placeholder="Password" id="viptela_password" value="{{ viptela.0.password }}" disabled>
                 </div>
               </div>
             </div>
@@ -418,8 +418,8 @@
     if("{{ viptela.0.enabled }}" == "True") {
       $("input[name='viptela'][value='enabled']").prop('checked', true);
       $('#viptela_host').prop('disabled', false);
-      $('#viptela_ikey').prop('disabled', false);
-      $('#viptela_skey').prop('disabled', false);
+      $('#viptela_username').prop('disabled', false);
+      $('#viptela_password').prop('disabled', false);
     }
     if("{{ umbrella.0.enabled }}" == "True") {
       $("input[name='umbrella'][value='enabled']").prop('checked', true);
@@ -471,12 +471,12 @@
       var radio = $("input[name='viptela']:checked").val();
       if(radio=="enabled") {
         $('#viptela_host').prop('disabled', false);
-        $('#viptela_ikey').prop('disabled', false);
-        $('#viptela_skey').prop('disabled', false);
+        $('#viptela_username').prop('disabled', false);
+        $('#viptela_password').prop('disabled', false);
       } else if(radio=="disabled") {
         $('#viptela_host').prop('disabled', true);
-        $('#viptela_ikey').prop('disabled', true);
-        $('#viptela_skey').prop('disabled', true);
+        $('#viptela_username').prop('disabled', true);
+        $('#viptela_password').prop('disabled', true);
       }
     });
     $("input[name='umbrella']").click(function() {
