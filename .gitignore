@@ -8,4 +8,5 @@ env.bak/
 venv.bak/
 .pyc
 
+.tutorial-env/
 ./sehack/.env
