@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Auth0 config
 
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
-SOCIAL_AUTH_AUTH0_DOMAIN = 'rbachack.eu.auth0.com'
+SOCIAL_AUTH_AUTH0_DOMAIN = os.getenv("auth0_domain")
 SOCIAL_AUTH_AUTH0_KEY = os.getenv("auth0_key")
 SOCIAL_AUTH_AUTH0_SECRET = os.getenv("auth0_secret")
 
