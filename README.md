@@ -38,7 +38,7 @@ python manage.py migrate
 ### Step Four
 You can use the in-built Django Web-Server, however it is recommended to use a production ready web-server.
 ```Python
-python manage.py runserver 3000
+(./sehack) python manage.py runserver 3000
 ```
 
 ### Step Five
