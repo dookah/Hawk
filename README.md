@@ -22,9 +22,6 @@ Hawk makes use of a number of enviroment variables, you'll need to populate thes
 django_key = RANDOM_STRING_HERE
 ```
 ```Python
-django_key = RANDOM_STRING_HERE
-```
-```Python
 auth0_domain = DOMAIN FROM AUTH0
 ```
 ```Python
