@@ -17,7 +17,7 @@ Hawk has a number of dependencies, you can install these from the requirements.t
 (./) pip install -r requirements.txt
 ```
 ### Step Two
-Hawk makes use of a number of enviroment variables, you'll need to populate these in your deployment enviroment. 
+Hawk makes use of a number of enviroment variables, you'll need to populate these in your deployment enviroment. You can create a .env file (./sehack/sehack/.env) and place these enviroment variables inside that file. 
 ```Python
 django_key = RANDOM_STRING_HERE
 ```
